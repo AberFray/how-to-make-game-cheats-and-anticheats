@@ -1,0 +1,6 @@
+cheatengine-i386.exe
+cheatengine-x86_64.exe
+cheatengine-x86_64-SSE4-AVX2.exe
+QuakeCheats.exe
+QuakeCheats2.exe
+QuakeCheats3.exe
