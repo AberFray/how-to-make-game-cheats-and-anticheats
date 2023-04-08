@@ -6,4 +6,6 @@
 
 ------------
 
+### Click [here](https://github.com/AberFray/how-to-make-game-cheats-and-anticheats "Main page") to go back to the main page
+
 (The link in the bottom left of this is for feedback to GitHub itself, to give feedback on this repository, click [here](https://forms.office.com/e/r9Mdy3stif "Survey"))
