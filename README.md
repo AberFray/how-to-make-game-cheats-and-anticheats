@@ -10,7 +10,7 @@ This is aimed at individuals that have a good grasp of:
 
 If you are unsure about these topics, then you might be confused by the content of this, so I would recommend researching and learning these first before attempting.
 
-Good resources for learning would be [W3Schools](http://https://www.w3schools.com/cpp/default.asp "W3Schools") and [Tutorialspoint.com](http://https://www.tutorialspoint.com/operating_system/os_memory_management.htm "Tutorialspoint.com").
+Good resources for learning would be [W3Schools](https://www.w3schools.com/cpp/default.asp "W3Schools") and [Tutorialspoint](https://www.tutorialspoint.com/operating_system/os_memory_management.htm "Tutorialspoint").
 
 ------------
 
