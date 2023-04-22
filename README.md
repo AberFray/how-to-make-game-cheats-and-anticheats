@@ -48,3 +48,5 @@ The code was developed using **Visual Studio Community Edition** on **Windows 10
 
 #### Finally, if you have any thoughts or feedback you would like to provide, then please take part in this survey: https://forms.office.com/e/r9Mdy3stif
 #### And if you would like to read the corresponding paper for this, then follow this link: INSERT_LINK_HERE
+
+[This resource is only for educational purposes]
