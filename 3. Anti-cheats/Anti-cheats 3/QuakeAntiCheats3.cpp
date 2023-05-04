@@ -1,7 +1,13 @@
 #include <iostream> // For general input and output
 #include <Windows.h> // Windows API for interacting with windows processes
 #include <TlHelp32.h> // For getting snapshots
-#include <thread>
+#include <thread> // Used to check for space bar presses in a seporate thread
+
+/*
+    checkForSpacebar function
+    Called by a new thread and constantly checks if the space bar has been pressed, if so then sets the flag given to it via the parameter to false
+    The flag is passed by reference, so it will be changed by this function in the main thread)
+*/
 
 void checkForSpacebar(bool* flag) {
     while (true) {
