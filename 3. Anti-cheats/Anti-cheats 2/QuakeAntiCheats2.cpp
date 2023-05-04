@@ -1,9 +1,9 @@
 #include <iostream> // For general input and output
 #include <Windows.h> // Windows API for interacting with windows processes
 #include <TlHelp32.h> // For getting snapshots
-#include <fstream>
+#include <fstream> // For handling files
 
-#define CODE_SIZE 2
+#define CODE_SIZE 2 // The size of the code being looked at in bytes
 
 int main()
 {
@@ -72,16 +72,20 @@ int main()
 
     // Setting up variables for reading the game code
     unsigned char actualCode[CODE_SIZE] = { 0x??, 0x?? }; // The original jmp command
-    unsigned char readCode[CODE_SIZE];
+    unsigned char readCode[CODE_SIZE]; // A buffer for the actual code being read
     uintptr_t r_draworderStopper = gameBaseAddr + 0x?????; // The address of the jmp command
 
     // Main loop
     while (true) {
+        
+        // Reads the contents of the memory area of interest and puts it into the readCode buffer
         ReadProcessMemory(gameProc, (BYTE*)r_draworderStopper, &readCode, sizeof(readCode), 0);
+        
+        // Checks each byte of the code and sees if it matches the original that was manually put in
         for (int i = 0; i < CODE_SIZE; i++) {
-            if (actualCode[i] != readCode[i]) {
+            if (actualCode[i] != readCode[i]) { // If it doesn't match, close the game
                 TerminateProcess(gameProc, r_draworderStopper + i);
-                exit(0);
+                exit(0); // This is only here for demo purposes. An actual anti-cheat wouldn't die as soon as it caught something
             }
         }
     }
