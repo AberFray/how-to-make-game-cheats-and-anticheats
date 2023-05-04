@@ -5,8 +5,6 @@
 #include <vector> // Adds the vector class to use
 #include <string> // Used for some string transformation functions
 
-#define CODE_SIZE 2 // The size of the code being looked at in bytes
-
 int main()
 {
     /*
