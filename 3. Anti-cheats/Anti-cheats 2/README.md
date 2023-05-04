@@ -21,7 +21,7 @@ Starting off, as always, is to set up the relevant variables.
 ```cpp
 // Setting up variables for modifying game code
 unsigned char actualCode[CODE_SIZE] = { 0x74, 0x?? }; // The original jmp command
-unsigned char readCode[CODE_SIZE];
+unsigned char readCode[CODE_SIZE]; // A buffer for the actual code being read
 uintptr_t r_draworderStopper = gameBaseAddr + 0x?????; // The address of the jmp command
 ```
 
@@ -33,11 +33,15 @@ Finally, the code loops until it detects a change in the game's runtime code. If
 ```cpp
 // Main loop
 while (true) {
+    
+    // Reads the contents of the memory area of interest and puts it into the readCode buffer
     ReadProcessMemory(gameProc, (BYTE*)r_draworderStopper, &readCode, sizeof(readCode), 0);
+        
+    // Checks each byte of the code and sees if it matches the original that was manually put in
     for (int i = 0; i < CODE_SIZE; i++) {
-        if (actualCode[i] != readCode[i]) {
+        if (actualCode[i] != readCode[i]) { // If it doesn't match, close the game
             TerminateProcess(gameProc, r_draworderStopper + i);
-            exit(0);
+            exit(0); // This is only here for demo purposes. An actual anti-cheat wouldn't die as soon as it caught something
         }
     }
 }
