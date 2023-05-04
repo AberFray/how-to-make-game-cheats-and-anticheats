@@ -3,9 +3,9 @@
 #include <Windows.h> // Windows API for interacting with windows processes
 #include <TlHelp32.h> // For getting snapshots
 #include <vector> // Adds the vector class to use
-#include <string>
+#include <string> // Used for some string transformation functions
 
-#define CODE_SIZE 2
+#define CODE_SIZE 2 // The size of the code being looked at in bytes
 
 int main()
 {
