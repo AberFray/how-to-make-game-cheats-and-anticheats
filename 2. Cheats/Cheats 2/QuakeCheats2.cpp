@@ -5,9 +5,8 @@
 boolean cheatsRunning = true; // Global variable used to check if the game cheats are running. Global because it is used by all threads
 
 /*
-    autoStrafe function
-    It's called by a new thread as it contains lots of sleep commands which would mess with the other things being run there
-    runStrafe is the reference to the flag for when it should run
+    printMenu function
+    ... Does what it says on the tin
 */
 
 void printMenu() {
