@@ -6,9 +6,8 @@
 boolean cheatsRunning = true; // Global variable used to check if the game cheats are running. Global because it is used by all threads
 
 /*
-    autoStrafe function
-    It's called by a new thread as it contains lots of sleep commands which would mess with the other things being run there
-    runStrafe is the reference to the flag for when it should run
+    printMenu function
+    ... Does what it says on the tin
 */
 
 void printMenu() {
@@ -30,8 +29,13 @@ void printMenu() {
     std::cout << "\n - Press the E key to auto strafe -" << std::endl;
 }
 
-void autoStrafe(boolean &runStrafe) {
+/*
+    autoStrafe function
+    It's called by a new thread as it contains lots of sleep commands which would mess with the other things being run there
+    runStrafe is the reference to the flag for when it should run
+*/
 
+void autoStrafe(boolean &runStrafe) {
 
     // Sets up the input stages to be run for strafing
     // Each one is similar to the jump inputs, the only important info is 0x44 is the "d" Key and 0x41 is the "a" key
