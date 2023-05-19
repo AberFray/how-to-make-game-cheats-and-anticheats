@@ -18,7 +18,7 @@ This project is mainly split into 2 sections, each with 3 pieces of material for
 #### Cheats
 - Cheats 1: *Bunny hop script*
 - Cheats 2: *Wall hack**
-- Cheats 3: *Aim hack*
+- Cheats 3: *Aim cheats*
 
 #### Anti-cheats
 - Anti-cheats 1: *Running processes scanning*
