@@ -135,7 +135,7 @@ int main()
     float relposX = 0;
     float relposY = 0;
 
-    std::thread inputThread(checkForInput); // Creates a thread for handling input checking input, 
+    std::thread inputThread(checkForInput); // Creates a thread for handling input checking input 
 
     /*
         Main game loop
