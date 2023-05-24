@@ -5,6 +5,7 @@
 #include <math.h> // For the trigonometry stuff yey
 
 boolean cheatsRunning = true; // Global variable used to check if the game cheats are running. Global because it is used by all threads
+bool aimToggle = false; // Global flag for turning the cheats on and off. Tried doing this local variables passed by reference, but it was having problems
 
 /*
     printMenu function
@@ -15,14 +16,14 @@ void printMenu() {
 
     // Print the title
     std::cout <<
-        ":'#######::'##::::'##::::'###::::'##:::'##:'########:::::::'###::::'####:'##::::'##::::'########:'##::::'##::::'###::::'##::::'##:'########::'##:::::::'########:"
-        "'##.... ##: ##:::: ##:::'## ##::: ##::'##:: ##.....:::::::'## ##:::. ##:: ###::'###:::: ##.....::. ##::'##::::'## ##::: ###::'###: ##.... ##: ##::::::: ##.....::"
-        " ##:::: ##: ##:::: ##::'##:. ##:: ##:'##::: ##:::::::::::'##:. ##::: ##:: ####'####:::: ##::::::::. ##'##::::'##:. ##:: ####'####: ##:::: ##: ##::::::: ##:::::::"
-        " ##:::: ##: ##:::: ##:'##:::. ##: #####:::: ######::::::'##:::. ##:: ##:: ## ### ##:::: ######:::::. ###::::'##:::. ##: ## ### ##: ########:: ##::::::: ######:::"
-        " ##:'## ##: ##:::: ##: #########: ##. ##::: ##...::::::: #########:: ##:: ##. #: ##:::: ##...:::::: ## ##::: #########: ##. #: ##: ##.....::: ##::::::: ##...::::"
-        " ##:.. ##:: ##:::: ##: ##.... ##: ##:. ##:: ##:::::::::: ##.... ##:: ##:: ##:.:: ##:::: ##:::::::: ##:. ##:: ##.... ##: ##:.:: ##: ##:::::::: ##::::::: ##:::::::"
-        ": ##### ##:. #######:: ##:::: ##: ##::. ##: ########:::: ##:::: ##:'####: ##:::: ##:::: ########: ##:::. ##: ##:::: ##: ##:::: ##: ##:::::::: ########: ########:"
-        ":.....:..:::.......:::..:::::..::..::::..::........:::::..:::::..::....::..:::::..:::::........::..:::::..::..:::::..::..:::::..::..:::::::::........::........::"
+        ":'#######::'##::::'##::::'###::::'##:::'##:'########:::::::'###::::'####:'##::::'##::::'########:'##::::'##::::'###::::'##::::'##:'########::'##:::::::'########:\n"
+        "'##.... ##: ##:::: ##:::'## ##::: ##::'##:: ##.....:::::::'## ##:::. ##:: ###::'###:::: ##.....::. ##::'##::::'## ##::: ###::'###: ##.... ##: ##::::::: ##.....::\n"
+        " ##:::: ##: ##:::: ##::'##:. ##:: ##:'##::: ##:::::::::::'##:. ##::: ##:: ####'####:::: ##::::::::. ##'##::::'##:. ##:: ####'####: ##:::: ##: ##::::::: ##:::::::\n"
+        " ##:::: ##: ##:::: ##:'##:::. ##: #####:::: ######::::::'##:::. ##:: ##:: ## ### ##:::: ######:::::. ###::::'##:::. ##: ## ### ##: ########:: ##::::::: ######:::\n"
+        " ##:'## ##: ##:::: ##: #########: ##. ##::: ##...::::::: #########:: ##:: ##. #: ##:::: ##...:::::: ## ##::: #########: ##. #: ##: ##.....::: ##::::::: ##...::::\n"
+        " ##:.. ##:: ##:::: ##: ##.... ##: ##:. ##:: ##:::::::::: ##.... ##:: ##:: ##:.:: ##:::: ##:::::::: ##:. ##:: ##.... ##: ##:.:: ##: ##:::::::: ##::::::: ##:::::::\n"
+        ": ##### ##:. #######:: ##:::: ##: ##::. ##: ########:::: ##:::: ##:'####: ##:::: ##:::: ########: ##:::. ##: ##:::: ##: ##:::: ##: ##:::::::: ########: ########:\n"
+        ":.....:..:::.......:::..:::::..::..::::..::........:::::..:::::..::....::..:::::..:::::........::..:::::..::..:::::..::..:::::..::..:::::::::........::........::\n"
         << std::endl;
 
     // Print instructions
@@ -33,7 +34,7 @@ void printMenu() {
 /*
     Handles input to toggle the cheats
 */
-void checkForInput(bool aimToggle) {
+void checkForInput() {
     while (true) {
         if (GetAsyncKeyState(VK_MBUTTON) & 0x8000) {
             if (aimToggle) {
@@ -47,7 +48,7 @@ void checkForInput(bool aimToggle) {
             cheatsRunning = false;
             break;
         }
-        Sleep(500); // Sleep to stop re-toggles
+        Sleep(200); // Sleep to stop re-toggles
     }
 }
 
@@ -120,23 +121,21 @@ int main()
 
     // Setting up the variables and memory addresses for the needed data to calculate where to aim
     float playerYaw = 0;
-    uintptr_t playerYawAddr = gameBaseAddr + 0x?????;
+    uintptr_t playerYawAddr = gameBaseAddr + 0xEDF10;
     float playerX = 0;
-    uintptr_t playerXAddr = gameBaseAddr + 0x?????;
+    uintptr_t playerXAddr = gameBaseAddr + 0xD0B80;
     float playerY = 0;
-    uintptr_t playerYAddr = gameBaseAddr + 0x?????;
+    uintptr_t playerYAddr = gameBaseAddr + 0xD0B84;
     float player2X = 0;
-    uintptr_t player2XAddr = gameBaseAddr + 0x?????;
+    uintptr_t player2XAddr = gameBaseAddr + 0xD11B0;
     float player2Y = 0;
-    uintptr_t player2YAddr = gameBaseAddr + 0x?????;
+    uintptr_t player2YAddr = gameBaseAddr + 0xD11B4;
 
     // Sets up extra variables for the calculations
     float relposX = 0;
     float relposY = 0;
 
-    bool aimToggle = false; // Flag to toggle the cheats
-
-    std::thread inputThread(checkForInput, std::ref(aimToggle)); // Creates a thread for handling input checking input, 
+    std::thread inputThread(checkForInput); // Creates a thread for handling input checking input, 
 
     /*
         Main game loop
@@ -165,7 +164,7 @@ int main()
         }
     }
 
-    inputThread.join();
+    inputThread.join(); // Joins the final input checking thread
 
     std::cout << "- Cheats closed -" << std::endl; // End message
 
