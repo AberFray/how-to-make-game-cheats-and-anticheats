@@ -71,15 +71,18 @@ float relposX = 0;
 float relposY = 0;
 ```
 
-Along with creating a variable to track when to run the cheats, which gets past to a function via another thread to handle input
+Along with creating a global variable to track when to run the cheats, which gets past to a function via another thread to handle input
 
 ```cpp
-bool aimToggle = false; // Flag to toggle the cheats
-std::thread inputThread(checkForInput, std::ref(toggle)); // Creates a thread for handling input checking input, 
+bool aimToggle = false; // Global flag for turning the cheats on and off. Tried doing this local variables passed by reference, but it was having problems
 ```
 
 ```cpp
-void checkForInput(bool aimToggle) {
+std::thread inputThread(checkForInput, std::ref(toggle)); // Creates a thread for handling input checking input
+```
+
+```cpp
+void checkForInput() {
  while (true) {
  if (GetAsyncKeyState(VK_MBUTTON) & 0x8000) {
  if (aimToggle) {
@@ -93,12 +96,12 @@ void checkForInput(bool aimToggle) {
  cheatsRunning = false;
  break;
  }
- Sleep(500); // Sleep to stop re-toggles
+ Sleep(200); // Sleep to stop re-toggles
  }
 }
 ```
 
-This also uses a global variable checking if the cheats are running.
+This also uses another global variable checking if the cheats are running.
 
 Back to the main code, it runs a constant loop where it first grabs the players location data
 
@@ -195,7 +198,8 @@ WriteProcessMemory(gameProc, (BYTE*)playerYawAddr, &playerYaw, sizeof(playerYaw)
 And finally is the code to join the thread and print the close message. This will be triggered by `cheatsRunning` being set to false by the other thread.
 
 ```cpp
-inputThread.join();
+inputThread.join(); // Joins the final input checking thread
+
 std::cout << "- Cheats closed -" << std::endl; // End message
 ```
 
